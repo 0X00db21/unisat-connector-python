@@ -1,7 +1,7 @@
 class BRC20:
-    """
-    docs: https://docs.unisat.io/dev/unisat-developer-service/brc-20
-    """
+    ''' Implementation of BRC20 Module of UniSat API (from UDS documentations)
+    see: https://docs.unisat.io/dev/unisat-developer-service/brc-20
+    '''
 
     def __init__(self, client):
         self.client = client
