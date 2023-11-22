@@ -76,3 +76,15 @@ class General:
         route = f'/v1/indexer/address/{address}/history'
         params = {'size': size, 'cursor': cursor}
         return self.client.call(method='GET', route=route, params=params)
+
+    def get_btc_utxo(self, address, size, cursor):
+        '''Get non inscription UTXO list by address
+
+        Parameters:
+            address (str): Address
+            cursor (int): Start offset
+            size (int): Number of items returned
+        '''
+        route = f'/v1/indexer/address/{address}/utxo-data'
+        params = {'size': size, 'cursor': cursor}
+        return self.client.call(method='GET', route=route, params=params)
