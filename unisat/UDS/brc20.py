@@ -73,3 +73,21 @@ class BRC20:
         route = f'/v1/indexer/brc20/{ticker}/tx/{txid}/history'
         params = {'limit': limit, 'start': start, 'type': type_}
         return self.client.call(method='GET', route=route, params=params)
+
+    def get_address_brc20_summary(self, address, start, limit):
+        """Obtain BRC20 token summary by address,
+        including available balance, transferable balance
+
+        Each ticker includes two types of balances:
+        - transferableBalance: The balance already inscribed as TRANSFER inscriptions
+        - availableBalance: The balance can be inscribed as TRANSFER inscriptions
+        - overallBalance =  transferableBalance+availableBalance
+
+        Parameters:
+            address (str): Address
+            limit (int): Number of inscriptions returned
+            start (int): Start offset
+        """
+        route = f'/v1/indexer/address/{address}/brc20/summary'
+        params = {'start': start, 'limit': limit}
+        return self.client.call(method='GET', route=route, params=params)
