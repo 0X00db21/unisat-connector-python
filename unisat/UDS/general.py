@@ -31,3 +31,15 @@ class General:
         '''
         route = f'/v1/indexer/tx/{txid}'
         return self.client.call(method='GET', route=route)
+
+    def get_tx_inputs(self, txid, cursor, size):
+        '''Get the inputs of a tx.
+
+        Parameters:
+            txid (int): Block height
+            cursor (int): Start offset
+            size (int): Number of items returned
+        '''
+        route = f'/v1/indexer/tx/{txid}/ins'
+        params = {'size': size, 'cursor': cursor}
+        return self.client.call(method='GET', route=route, params=params)
