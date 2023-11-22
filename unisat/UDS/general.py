@@ -5,3 +5,8 @@ class General:
 
     def __init__(self, client):
         self.client = client
+
+    def get_blockchain_info(self):
+        """Get blockchain info."""
+        route = '/v1/indexer/blockchain/info'
+        return self.client.call(method='GET', route=route)
