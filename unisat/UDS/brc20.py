@@ -33,3 +33,15 @@ class BRC20:
         '''
         route = f'/v1/indexer/brc20/{ticker}/info'
         return self.client.call(method='GET', route=route)
+
+    def get_brc20_holders(self, ticker, start, limit):
+        '''Get the holders of BRC20 by ticker.
+
+        Parameters:
+            ticker (str): Token ticker
+            start (int): Start offset
+            limit (int): Number of returned
+        '''
+        route = f'/v1/indexer/brc20/{ticker}/holders'
+        params = {'limit': limit, 'start': start}
+        return self.client.call(method='GET', route=route, params=params)
