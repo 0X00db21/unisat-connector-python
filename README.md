@@ -11,7 +11,7 @@ This is a lightweight library that works as a connector to UniSat API
 - UniSat Developer Service: https://docs.unisat.io/dev/unisat-developer-service
 - UniSat Developer Service Legal Disclaimer: https://docs.unisat.io/dev/unisat-developer-service-legal-disclaimer
 - Mainnet swagger: https://open-api.unisat.io/swagger.html
-- Testbet swagger: https://open-api-testnet.unisat.io/swagger.html
+- Testnet swagger: https://open-api-testnet.unisat.io/swagger.html
 
 ## Install
 ```sh
