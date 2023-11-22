@@ -55,3 +55,12 @@ class General:
         route = f'/v1/indexer/tx/{txid}/outs'
         params = {'size': size, 'cursor': cursor}
         return self.client.call(method='GET', route=route, params=params)
+
+    def get_address_balance(self, address):
+        '''Get balance by address.
+
+        Parameters:
+            address (str): Address
+        '''
+        route = f'/v1/indexer/address/{address}/balance'
+        return self.client.call(method='GET', route=route)
