@@ -91,3 +91,14 @@ class BRC20:
         route = f'/v1/indexer/address/{address}/brc20/summary'
         params = {'start': start, 'limit': limit}
         return self.client.call(method='GET', route=route, params=params)
+
+    def get_address_brc20_ticker_info(self, address, ticker):
+        '''Obtain BRC20 token information by address, including availale balance, transferable
+        balance, number of transferable inscriptions, the first few inscriptions, etc.
+
+        Parameters:
+            address (str): Address
+            ticker (str): Token ticker
+        '''
+        route = f'/v1/indexer/address/{address}/brc20/{ticker}/info'
+        return self.client.call(method='GET', route=route)
