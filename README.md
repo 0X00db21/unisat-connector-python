@@ -4,7 +4,7 @@ This is a lightweight library that works as a connector to UniSat API
 ## ::WARNING::
 - This stuff is in pre-alpha version, you probably shouldn't use it as is for production.
 - I am not associated with UniSat, use at your own risk, etc.
-- There is only one route implemented at the moment (Next step is BRC-20 module)
+- There is only one module (BRC-20) implemented at the moment
 - This stuff isn't thread-safe
 
 ## UniSat documentation
@@ -29,19 +29,48 @@ $ deactivate
 import os
 import logging
 import unisat
+import pprint
 
 token = os.environ.get('UNISAT_KEY')
-with unisat.Client(endpoint=unisat.TESTNET, api_key=token, log_config="stderr", log_level=logging.DEBUG) as client:
-    client.log("First shoot !")
+with unisat.Client(endpoint=unisat.TESTNET, api_key=token, log_config="./journal.log", log_level=logging.INFO) as client:
+    client.log("Showing stack trace in error logs (exc_info = True))")
+    client.log_exc_info = True
+    # set start, limit, ticker, type_ height, txid, address variable
+    # see https://docs.unisat.io/dev/unisat-developer-service/brc-20 for more information
     try:
-        client.uds.brc20.get_best_block_height()
+        brc20 = client.uds.brc20 # shortcut for brc20 module
+        response = brc20.get_best_block_height()
+        pprint.pprint(response)
+
+        ## Another method exposed
+        #brc20.get_brc20_list(start, limit)
+        #brc20.get_brc20_info(ticker)
+        #brc20.get_brc20_holders(ticker, start, limit)
+        #brc20.get_brc20_history(ticker, type_, height, start, limit)
+        #brc20.get_brc20_tx_history(ticker, txid, type_, start, limit)
+        #brc20.get_address_brc20_summary(address, start, limit)
+        #brc20.get_address_brc20_ticker_info(address, ticker)
+        #brc20.get_address_brc20_history(address, ticker, type_, start, limit)
+        #brc20.get_transferable_inscription(address, ticker, start, limit)
     except unisat.ClientError:
-        pass # show log on stderr
+        pass # don't stop script and show log on ./journal.log
 ```
 
 ```shell
 $ export UNISAT_KEY="[INSERT_YOUR_BEARER_TOKEN_HERE]"
 $ python3 ./example.py
+{'code': 0,
+ 'data': {'blockid': '000000000000000b397da768001ebf1dce67af2d63a96dfd4bb81e5a54590a7a',
+          'height': 2539814,
+          'timestamp': 1700662061,
+          'total': 509},
+ 'http_status_code': 200,
+ 'msg': 'ok'}
+$ cat journal.log
+2023-11-22 15:11:36,641 - unisat.client - INFO - starting unisat client
+2023-11-22 15:11:36,641 - unisat.client - INFO - Showing stack trace in error logs (exc_info = True))
+2023-11-22 15:11:37,546 - unisat.client - INFO - [stopping unisat client]
+$
 ```
 
 ## Configuration
