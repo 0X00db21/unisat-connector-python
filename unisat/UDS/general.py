@@ -10,3 +10,15 @@ class General:
         """Get blockchain info."""
         route = '/v1/indexer/blockchain/info'
         return self.client.call(method='GET', route=route)
+
+    def get_block_transactions(self, height, size, cursor):
+        '''Get tx history by block height.
+
+        Parameters:
+            height (int): Block height
+            size (int): Number of items returned
+            cursor (int): Start offset
+        '''
+        route = f'/v1/indexer/block/{height}/txs'
+        params = {'size': size, 'cursor': cursor}
+        return self.client.call(method='GET', route=route, params=params)
