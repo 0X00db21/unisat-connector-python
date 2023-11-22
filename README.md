@@ -35,14 +35,30 @@ token = os.environ.get('UNISAT_KEY')
 with unisat.Client(endpoint=unisat.TESTNET, api_key=token, log_config="./journal.log", log_level=logging.INFO) as client:
     client.log("Showing stack trace in error logs (exc_info = True))")
     client.log_exc_info = True
-    # set start, limit, ticker, type_ height, txid, address variable
-    # see https://docs.unisat.io/dev/unisat-developer-service/brc-20 for more information
+    # set start, limit, ticker, type_ height, txid, address, size, cursor, inscription_id variable
     try:
+        # General Module
+        # see https://docs.unisat.io/dev/unisat-developer-service/general for more information
+        general = client.uds.general
+        response = general.get_blockchain_info()
+        pprint.pprint(response)
+        ## Another methods exposed
+        #general.get_block_transactions(height, cursor, size)
+        #general.get_tx_info(txid)
+        #general.get_tx_inputs(txid, cursor, size)
+        #general.get_tx_outputs(txid, cursor, size)
+        #general.get_address_balance(address)
+        #general.get_address_history(address, cursor, size)
+        #general.get_btc_utxo(address, cursor, size)
+        #general.get_inscription_utxo(address, cursor, size)
+        #general.get_inscription_info(inscription_id)
+
+        # BRC20 Module
+        # see https://docs.unisat.io/dev/unisat-developer-service/brc-20 for more information
         brc20 = client.uds.brc20 # shortcut for brc20 module
         response = brc20.get_best_block_height()
         pprint.pprint(response)
-
-        ## Another method exposed
+        ## Another methods exposed
         #brc20.get_brc20_list(start, limit)
         #brc20.get_brc20_info(ticker)
         #brc20.get_brc20_holders(ticker, start, limit)
@@ -58,18 +74,29 @@ with unisat.Client(endpoint=unisat.TESTNET, api_key=token, log_config="./journal
 
 ```shell
 $ export UNISAT_KEY="[INSERT_YOUR_BEARER_TOKEN_HERE]"
-$ python3 ./example.py
+$ python3 example.py
 {'code': 0,
- 'data': {'blockid': '000000000000000b397da768001ebf1dce67af2d63a96dfd4bb81e5a54590a7a',
-          'height': 2539814,
-          'timestamp': 1700662061,
-          'total': 509},
+ 'data': {'bestBlockHash': '0000000000000012cf208bc1d7475bf2d19e3c8c736bd0ab90c11f52ce11287f',
+          'blocks': 2539834,
+          'chain': 'test',
+          'chainwork': '',
+          'difficulty': '',
+          'headers': 2539834,
+          'medianTime': 1700669817,
+          'prevBlockHash': '000000000000002a803c8de7da752177880446fa04e31601b689e6618b019a45'},
+ 'http_status_code': 200,
+ 'msg': 'ok'}
+{'code': 0,
+ 'data': {'blockid': '0000000000000012cf208bc1d7475bf2d19e3c8c736bd0ab90c11f52ce11287f',
+          'height': 2539833,
+          'timestamp': 1700671729,
+          'total': 511},
  'http_status_code': 200,
  'msg': 'ok'}
 $ cat journal.log
-2023-11-22 15:11:36,641 - unisat.client - INFO - starting unisat client
-2023-11-22 15:11:36,641 - unisat.client - INFO - Showing stack trace in error logs (exc_info = True))
-2023-11-22 15:11:37,546 - unisat.client - INFO - [stopping unisat client]
+2023-11-22 17:54:06,157 - unisat.client - INFO - starting unisat client
+2023-11-22 17:54:06,157 - unisat.client - INFO - Showing stack trace in error logs (exc_info = True))
+2023-11-22 17:54:07,844 - unisat.client - INFO - [stopping unisat client]
 $
 ```
 
