@@ -43,3 +43,15 @@ class General:
         route = f'/v1/indexer/tx/{txid}/ins'
         params = {'size': size, 'cursor': cursor}
         return self.client.call(method='GET', route=route, params=params)
+
+    def get_tx_outputs(self, txid, cursor, size):
+        '''Get the outputs of a tx.
+
+        Parameters:
+            txid (int): Tx id
+            size (int): Number of items returned
+            cursor (int): Start offset
+        '''
+        route = f'/v1/indexer/tx/{txid}/outs'
+        params = {'size': size, 'cursor': cursor}
+        return self.client.call(method='GET', route=route, params=params)
