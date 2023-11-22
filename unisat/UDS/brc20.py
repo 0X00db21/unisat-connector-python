@@ -13,3 +13,14 @@ class BRC20:
         '''
         route = '/v1/indexer/brc20/bestheight'
         return self.client.call(method='GET', route=route)
+
+    def get_brc20_list(self, start, limit):
+        """Get the ticker list of BRC20 token.
+
+        Parameters:
+            limit (int): Number of inscriptions returned
+            start (int): Start offset
+        """
+        route = '/v1/indexer/brc20/list'
+        params = {'limit': limit, 'start': start}
+        return self.client.call(method='GET', route=route, params=params)
