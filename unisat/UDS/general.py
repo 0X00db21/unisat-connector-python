@@ -64,3 +64,15 @@ class General:
         '''
         route = f'/v1/indexer/address/{address}/balance'
         return self.client.call(method='GET', route=route)
+
+    def get_address_history(self, address, cursor, size):
+        '''Get the tx history by address.
+
+        Parameters:
+            address (str): Address
+            cursor (int): Start offset
+            size (int): Number of items returned
+        '''
+        route = f'/v1/indexer/address/{address}/history'
+        params = {'size': size, 'cursor': cursor}
+        return self.client.call(method='GET', route=route, params=params)
