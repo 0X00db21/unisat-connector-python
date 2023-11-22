@@ -100,3 +100,12 @@ class General:
         route = f'/v1/indexer/address/{address}/inscription-utxo-data'
         params = {'size': size, 'cursor': cursor}
         return self.client.call(method='GET', route=route, params=params)
+
+    def get_inscription_info(self, inscription_id):
+        '''Get inscription info by inscriptionId
+
+        Parameters:
+            inscriptionid (str):
+        '''
+        route = f'/v1/indexer/inscription/info/{inscription_id}'
+        return self.client.call(method='GET', route=route)
