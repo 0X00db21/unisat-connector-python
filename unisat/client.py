@@ -25,6 +25,7 @@ class ClientError(Exception):
             logger (logging.Logger, optional): A logger instance for logging the error.
             log_exc_info (bool, optional): A flag indicating whether to log exception information.
         """
+        data = {} if data is None else data
         api_msg = data.get('msg', '[no message found]')
         api_code = data.get('http_status_code', '[no http status code found]')
         error_message = f'{api_msg} (http status code: {api_code})'
@@ -200,11 +201,17 @@ class Client:
         """
         msg = f'[CALL] _send_requests({str(method)}, {str(url)}, {str(headers)}, {str(data)})'
         self.logger.debug(msg)
-        req = requests.request(method, url, headers=headers, data=data)
         try:
+            req = requests.request(method, url, headers=headers, data=data)
             output = req.json()
-        except json.JSONDecodeError:
+        except requests.JSONDecodeError:
             output = {'code': -500, 'msg': 'Client not receive json !'}
+        except requests.RequestException:
+            msg = "An exception was raised by 'requests' module, "
+            msg += "investigation is needed to identify the root cause, "
+            msg += "e.g., incorrect URL, no internet access, unavailability of remote service, ..."
+            self.logger.error(msg, exc_info=self.log_exc_info)
+            raise ClientError(data=None)
         status = {'http_status_code': req.status_code}
         content = {**status, **output}
         self.logger.debug(f'[RETURN _send_requests] (content={str(content)}')
