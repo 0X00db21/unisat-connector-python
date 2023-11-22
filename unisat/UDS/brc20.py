@@ -116,3 +116,16 @@ class BRC20:
         route = f'/v1/indexer/address/{address}/brc20/{ticker}/history'
         params = {'limit': limit, 'start': start, 'type':type_}
         return self.client.call(method='GET', route=route, params=params)
+
+    def get_transferable_inscription(self, address, ticker, start, limit):
+        '''Get the transferable inscriptions list of BRC20 by address.
+
+        Parameters:
+            address (str): Address
+            ticker (str): Token ticker
+            start (int): Start offset
+            limit (int): Number of inscriptions returned
+        '''
+        route = f'/v1/indexer/address/{address}/brc20/{ticker}/transferable-inscriptions'
+        params = {'start': start, 'limit': limit}
+        return self.client.call(method='GET', route=route, params=params)
