@@ -102,3 +102,17 @@ class BRC20:
         '''
         route = f'/v1/indexer/address/{address}/brc20/{ticker}/info'
         return self.client.call(method='GET', route=route)
+
+    def get_address_brc20_history(self, address, ticker, type_, start, limit):
+        '''Get the full history of BRC20 by address.
+
+        Parameters:
+            ticker (str): Token ticker
+            address (str): Address
+            limit (int): Number of inscriptions returned
+            start (integer): Start offset
+            type_ (str): Filter by history type
+        '''
+        route = f'/v1/indexer/address/{address}/brc20/{ticker}/history'
+        params = {'limit': limit, 'start': start, 'type':type_}
+        return self.client.call(method='GET', route=route, params=params)
