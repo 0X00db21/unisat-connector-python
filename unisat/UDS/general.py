@@ -22,3 +22,12 @@ class General:
         route = f'/v1/indexer/block/{height}/txs'
         params = {'size': size, 'cursor': cursor}
         return self.client.call(method='GET', route=route, params=params)
+
+    def get_tx_info(self, txid):
+        '''Get the summary info of a tx.
+
+        Parameters:
+            txid (str): Tx id
+        '''
+        route = f'/v1/indexer/tx/{txid}'
+        return self.client.call(method='GET', route=route)
