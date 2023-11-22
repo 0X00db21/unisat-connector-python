@@ -88,3 +88,15 @@ class General:
         route = f'/v1/indexer/address/{address}/utxo-data'
         params = {'size': size, 'cursor': cursor}
         return self.client.call(method='GET', route=route, params=params)
+
+    def get_inscription_utxo(self, address, cursor, size):
+        '''Get inscription UTXO list by address
+
+        Parameters:
+            address (str): Address
+            cursor (int): Start offset
+            size (int): Number of items returned
+        '''
+        route = f'/v1/indexer/address/{address}/inscription-utxo-data'
+        params = {'size': size, 'cursor': cursor}
+        return self.client.call(method='GET', route=route, params=params)
